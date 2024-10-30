@@ -38,6 +38,12 @@ public class Review  {
     @JoinColumn(name = "recipe_id",referencedColumnName = "recipe_id",foreignKey = @ForeignKey(name = "FK_recipe_id", value = ConstraintMode.CONSTRAINT))
     Recipe recipe;
 
+    public Review(ReviewId id, String comment,Integer rating){
+        this.id = id;
+        this.rating=rating;
+        this.comment=comment;
+    }
+
 
 }
 

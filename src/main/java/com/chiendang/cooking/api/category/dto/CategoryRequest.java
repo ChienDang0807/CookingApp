@@ -13,9 +13,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryRequest {
-    Integer id;
 
     String name;
-
     List<RecipeRequest> recipe;
 }

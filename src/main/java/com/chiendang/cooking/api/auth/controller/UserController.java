@@ -43,10 +43,10 @@ public class UserController {
     }
 
 
-    @GetMapping(path = "/{userId}")
-    public ResponseData<?> getUserById(@PathVariable("userId") Integer userId){
+    @GetMapping(path = "/{email}")
+    public ResponseData<?> getUserById(@PathVariable("email") String email){
         // với kiểu giữ liệu trả về Optional có thêm orElse
-        return  new ResponseData<>(HttpStatus.OK.value(), "User is found", userService.getUser(userId));
+        return  new ResponseData<>(HttpStatus.OK.value(), "User is found", userService.getUser(email));
     }
 
     @GetMapping(path = "/myInfo")

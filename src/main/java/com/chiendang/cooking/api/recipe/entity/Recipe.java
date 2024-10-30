@@ -5,13 +5,12 @@ import com.chiendang.cooking.api.category.entity.Category;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
 import com.chiendang.cooking.api.instruction.entity.Instruction;
 import com.chiendang.cooking.api.review.entiy.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,16 +40,14 @@ public class Recipe extends AbstractEntity {
     @Column(name = "cook_time")
      String cookTime;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "recipe")
-     Set<Ingredient> ingredients;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")
+     Set<Ingredient> ingredients = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "recipe")
-     List<Instruction> instructions;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipeId")
+     List<Instruction> instructions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "recipe")
-    Set<Review> reviews;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
      Category category;
 
@@ -58,13 +55,23 @@ public class Recipe extends AbstractEntity {
     @JoinTable(name = "review",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-     Set<User> users ;
+     Set<User> users = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    User user;
 
     @Column(name = "image", nullable = false)
-    private String image;
+     String image;
+
+    @JsonIgnore // Stop infinite loop
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    @JsonIgnore
+    public List<Instruction> getInstructions() {
+        return instructions;
+    }
 
 }

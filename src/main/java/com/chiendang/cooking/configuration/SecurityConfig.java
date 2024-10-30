@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private  final  String[] PUBLIC_ENDPOINTS = {"/user/**",
+    private  final  String[] PUBLIC_ENDPOINTS = {"/users/**",
             "/auth/**"
     };
 

@@ -2,7 +2,11 @@ package com.chiendang.cooking.api.recipe.dto.request;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.category.entity.Category;
+import com.chiendang.cooking.api.ingredient.dto.IngredientRequest;
+import com.chiendang.cooking.api.ingredient.dto.IngredientResponse;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
+import com.chiendang.cooking.api.instruction.dto.InstructionRequest;
+import com.chiendang.cooking.api.instruction.dto.InstructionResponse;
 import com.chiendang.cooking.api.instruction.entity.Instruction;
 import com.chiendang.cooking.api.review.entiy.Review;
 import jakarta.validation.constraints.NotBlank;
@@ -20,8 +24,6 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RecipeRequest {
 
-    Integer id;
-
     @NotBlank(message = "NOT_BLANK")
     String recipeName;
 
@@ -29,15 +31,12 @@ public class RecipeRequest {
 
     String cookTime;
 
-    Set<Ingredient> ingredients;
+    List<IngredientRequest> ingredients;
 
-    List<Instruction> instructions;
-
-    Review review;
+    List<InstructionRequest> instructions;
 
     Category category;
 
-    User user;
 
     @NotBlank(message = "NOT_BLANK")
     String image;

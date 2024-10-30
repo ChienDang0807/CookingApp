@@ -47,10 +47,8 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-
-        //user.setRoles(new HashSet<>()(roles));
+        var roles = roleRespository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
 
         return userMapper.toUserResponse(userRespository.save(user));
     }
@@ -69,14 +67,18 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ADMIN')") // hasRole match vs cái nào có prefix là role
     //PreAuthorize("hasAuthority('UPDATE_DATA'))  : match vs cái nào == UPDATE_DATA
     public Page<UserResponse> getUsers(Pageable pageable){
-        log.info("In");
         return userRespository.findAll(pageable).map(userMapper::toUserResponse);
     }
 
     @Override
-    @PostAuthorize("returnObject.username == authentication.name") // chạy method trước mới kiểm tra quyền
-    public Optional<UserResponse> getUser(Integer id) {
-       return  userRespository.findById(id).map(userMapper::toUserResponse);
+    @PostAuthorize("returnObject.email == authentication.name") // chạy method trước mới kiểm tra quyền
+    public Optional<User> getUser(String email) {
+       return  userRespository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> getUserById(Integer id) {
+        return userRespository.findById(id);
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "category")
+@Table(name = "category_recipe")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -18,6 +18,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreationRequest {
+
     @NotBlank (message = "USERNAME_INVALID")
     @Email
     String email;
@@ -28,7 +29,7 @@ public class UserCreationRequest {
     @NotNull(message = "INVALID_DOB")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "MM/dd/yyyy")
-  //  @DobConstraint(min = 18, message = "INVALID_DOB")
+
     Date dob;
 
     List<String> roles;

@@ -1,6 +1,7 @@
 package com.chiendang.cooking.api.review.dto;
 
-import jakarta.persistence.Column;
+import com.chiendang.cooking.api.auth.dto.request.UserCreationRequest;
+import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

@@ -12,13 +12,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipe")
@@ -35,6 +33,11 @@ public class RecipeController {
 
         RecipeRequest dto = convertToRecipeRequest(recipeRequest);
         return  new ResponseData<>(HttpStatus.CREATED.value(), "Thêm công thuc thanh cong !!", recipeService.addRecipe(dto,file));
+    }
+
+    @GetMapping("/search")
+    public ResponseData<List<RecipeResponse>> searchRecipe(@RequestParam(required = true) String search){
+        return  new ResponseData<>(HttpStatus.CREATED.value(), "Thêm công thuc thanh cong !!", recipeService.searchRecipe(search));
     }
 
     // chuyển 1 chuỗi String sang Json
