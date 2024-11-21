@@ -32,7 +32,7 @@ public class PermissionController {
     @GetMapping
     ResponseData<List<PermissionResponse>> getAll(){
         return  new ResponseData<>(HttpStatus.OK.value()
-                ,"Get all users successfully"
+                ,"Get all permissions successfully"
                 ,permissionService.getAll());
     }
     @DeleteMapping("/{permission}")

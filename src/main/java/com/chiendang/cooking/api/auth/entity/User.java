@@ -1,20 +1,20 @@
 package com.chiendang.cooking.api.auth.entity;
 
+import com.chiendang.cooking.api.favorite_recipe.entity.FavoriteRecipe;
+import com.chiendang.cooking.api.forgotpassword.entity.ForgotPassword;
 import com.chiendang.cooking.api.recipe.entity.AbstractEntity;
 import com.chiendang.cooking.api.recipe.entity.Recipe;
 import com.chiendang.cooking.api.review.entiy.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "user")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,8 +25,7 @@ public class User extends AbstractEntity {
 
     @Id
     @Column(name="user_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "email")
@@ -35,19 +34,36 @@ public class User extends AbstractEntity {
     @Column(name = "password")
     String password;
 
+    @Column(name = "first_name")
+    String firstName;
+
+    @Column(name = "last_name")
+    String lastName;
+
     @Column(name = "dob")
     Date dob;
 
-    @OneToMany(mappedBy = "user")
-    Set<Review> reviews;
+    @OneToMany(mappedBy = "userCreated")
+    @JsonIgnore
+    Set<Recipe>  recipeCreatedBy;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    ForgotPassword forgotPassword;
 
     @OneToMany(mappedBy = "user")
-    Set<Recipe>  recipe;
+    @JsonIgnore
+    List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    Set<FavoriteRecipe> recipeFavorite = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_name"))
     Set<Role> roles;
+
 
 }

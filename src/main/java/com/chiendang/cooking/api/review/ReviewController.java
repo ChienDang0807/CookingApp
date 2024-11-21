@@ -24,40 +24,40 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
     ReviewService reviewService;
 
-    @PostMapping
-    public ResponseData<ReviewResponse> addReview(@RequestBody ReviewRequest request) {
-        try {
-
-            return new ResponseData<>(HttpStatus.CREATED.value(), "", reviewService.addReview(request));
-        } catch (AppExceptions e) {
-            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        } catch (Exception e) {
-            log.error("An unexpected error occurred while adding review:", e);
-            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        }
-    }
-
-    @PutMapping("/{userId}/{recipeId}")
-    public ResponseData<ReviewResponse> updateReview(@PathVariable Integer userId,
-                                                     @PathVariable Integer recipeId ,
-                                                     @RequestBody ReviewRequest request){
-        try{
-            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "",reviewService.updateReview(new ReviewId(userId,recipeId),request));
-        }catch (AppExceptions e){
-            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        }
-    }
-
-    @DeleteMapping("/{userId}/{recipeId}")
-    public ResponseData<?> deleteReview(@PathVariable Integer userId,
-                                        @PathVariable Integer recipeId){
-        try{
-            reviewService.deleteReview(new ReviewId(userId,recipeId));
-            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "");
-        }catch (AppExceptions e){
-            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-        }
-    }
+//    @PostMapping
+//    public ResponseData<ReviewResponse> addReview(@RequestBody ReviewRequest request) {
+//        try {
+//
+//            return new ResponseData<>(HttpStatus.CREATED.value(), "", reviewService.addReview(request));
+//        } catch (AppExceptions e) {
+//            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+//        } catch (Exception e) {
+//            log.error("An unexpected error occurred while adding review:", e);
+//            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+//        }
+//    }
+//
+//    @PutMapping("/{userId}/{recipeId}")
+//    public ResponseData<ReviewResponse> updateReview(@PathVariable Integer userId,
+//                                                     @PathVariable Integer recipeId ,
+//                                                     @RequestBody ReviewRequest request){
+//        try{
+//            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "",reviewService.updateReview(new ReviewId(userId,recipeId),request));
+//        }catch (AppExceptions e){
+//            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+//        }
+//    }
+//
+//    @DeleteMapping("/{userId}/{recipeId}")
+//    public ResponseData<?> deleteReview(@PathVariable Integer userId,
+//                                        @PathVariable Integer recipeId){
+//        try{
+//            reviewService.deleteReview(new ReviewId(userId,recipeId));
+//            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "");
+//        }catch (AppExceptions e){
+//            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+//        }
+//    }
 
 
 

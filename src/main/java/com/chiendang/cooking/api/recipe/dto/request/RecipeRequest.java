@@ -9,6 +9,7 @@ import com.chiendang.cooking.api.instruction.dto.InstructionRequest;
 import com.chiendang.cooking.api.instruction.dto.InstructionResponse;
 import com.chiendang.cooking.api.instruction.entity.Instruction;
 import com.chiendang.cooking.api.review.entiy.Review;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -38,10 +39,15 @@ public class RecipeRequest {
     Category category;
 
 
-    @NotBlank(message = "NOT_BLANK")
     String image;
 
     @NotBlank(message = "NOT_BLANK")
     String imageUrl;
+
+    String addInfor1;
+
+    String addInfor2;
+
+    String addInfor3;
 
 }

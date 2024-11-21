@@ -1,12 +1,15 @@
 package com.chiendang.cooking.api.auth.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -14,6 +17,14 @@ import java.util.Set;
 public class UserResponse {
     Integer id;
     String email;
-    LocalDate dob;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    Date dob;
+    String firstName;
+    String lastName;
     Set<RoleResponse> roles;
+
+    public UserResponse(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

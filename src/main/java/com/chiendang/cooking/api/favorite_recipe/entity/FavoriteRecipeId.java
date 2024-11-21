@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.review.entiy;
+package com.chiendang.cooking.api.favorite_recipe.entity;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.recipe.entity.Recipe;
@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public   class ReviewId implements Serializable {
+public class FavoriteRecipeId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -26,4 +27,5 @@ public   class ReviewId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
+
 }

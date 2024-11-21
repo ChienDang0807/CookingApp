@@ -2,6 +2,7 @@ package com.chiendang.cooking.api.ingredient.dto;
 
 import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
 
+import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,11 +13,13 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class IngredientRequest {
-    Integer id;
 
     String name;
 
     String amount;
 
     RecipeRequest recipe;
+
+    String addInfor1;
+    String addInfor2;
 }

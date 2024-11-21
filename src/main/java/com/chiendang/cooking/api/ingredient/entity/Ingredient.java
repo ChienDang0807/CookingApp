@@ -16,8 +16,7 @@ import lombok.experimental.FieldDefaults;
 public class Ingredient {
 
     @Id
-    @GeneratedValue( generator = "ingredient_seq")
-    @SequenceGenerator(name = "ingredient_seq", sequenceName = "ingredient_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id")
     Integer id;
 
@@ -30,4 +29,6 @@ public class Ingredient {
     @ManyToOne
     @JoinColumn(name = "recipe_id")
     Recipe recipe;
+
+
 }

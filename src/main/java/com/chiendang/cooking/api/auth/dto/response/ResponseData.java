@@ -12,8 +12,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class ResponseData<T>
 {
-    int status;
-    String message;
+    final int status;
+    final String message;
     T data;
 
      public ResponseData(int status, String message){

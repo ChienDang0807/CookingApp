@@ -50,7 +50,8 @@ public class UserServiceImpl implements UserService {
         var roles = roleRespository.findAllById(request.getRoles());
         user.setRoles(new HashSet<>(roles));
 
-        return userMapper.toUserResponse(userRespository.save(user));
+        User user1 = userRespository.save(user);
+        return userMapper.toUserResponse(user1);
     }
     @Override
     public  UserResponse getMyInfo(){

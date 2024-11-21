@@ -13,10 +13,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class IngredientResponse {
     Integer id;
-
     String name;
-
     String amount;
-
     RecipeResponse recipe;
 }

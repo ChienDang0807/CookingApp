@@ -16,8 +16,9 @@ import java.util.List;
 public interface RecipeMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "users", ignore = true)
-    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "userCreated", ignore = true)
+    @Mapping(target = "reviewers", ignore = true)
+    @Mapping(target = "userFavoriteRecipe",ignore = true)
     Recipe toRecipe(RecipeRequest request);
 
     @Mapping(target = "imageUrl" , ignore = true)

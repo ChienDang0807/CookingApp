@@ -23,10 +23,15 @@ public class SecurityConfig {
 
     private  final  String[] PUBLIC_ENDPOINTS = {"/users/**",
             "/auth/**"
+
     };
 
     @Autowired
     private CustomJwtDecoder customJwtDecoder;
+
+    public SecurityConfig(CustomJwtDecoder customJwtDecoder) {
+        this.customJwtDecoder = customJwtDecoder;
+    }
 
     //xác định endpoint nào cần bảo vệ endpoint nào có thể tự do truy cập
     // 2 endpoint đăng kí và xác nhận token cân đc tự do truy cập
@@ -34,6 +39,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.GET,"/swagger-ui*/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/v3/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/recipes").permitAll()
                         .anyRequest().authenticated()); // nếu k có url nào trùng vs cái trên thì yêu cầu xác thực
 
         // vấn đề: khi request có một  token trong header

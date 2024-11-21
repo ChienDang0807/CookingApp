@@ -3,6 +3,7 @@ package com.chiendang.cooking.api.category.service;
 import com.chiendang.cooking.api.category.dto.CategoryRequest;
 import com.chiendang.cooking.api.category.dto.CategoryResponse;
 import com.chiendang.cooking.api.category.entity.Category;
+import com.chiendang.cooking.api.category.mapper.CategoryMapper;
 import com.chiendang.cooking.api.category.repository.CategoryRepository;
 import com.chiendang.cooking.api.recipe.entity.Recipe;
 import com.chiendang.cooking.api.recipe.mapper.RecipeMapper;
@@ -16,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,22 +25,18 @@ import java.util.List;
 public class CategoryService {
 
     CategoryRepository categoryRepository;
-    RecipeMapper recipeMapper;
+    CategoryMapper categoryMapper;
 
     public CategoryResponse addCategory(CategoryRequest request){
-        List<Recipe> recipes = recipeMapper.toRecipeList(request.getRecipe());
+        if (categoryRepository.existsByName(request.getName())){
+            throw  new AppExceptions(ErrorCode.CATEGORY_IS_EXISTED);
+        }
+        Category category  = categoryRepository.save(Category.builder()
+                .name(request.getName()).build());
 
-
-        Category category = new Category(request.getId(),
-                request.getName(),
-                recipes);
-
-        categoryRepository.save(category);
-
-        return CategoryResponse.builder()
+        return  CategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())
-                .recipe(recipeMapper.toRecipeResponseList(recipes))
                 .build();
     }
 
@@ -46,20 +44,13 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new AppExceptions(ErrorCode.RESOURCES_NOT_FOUND));
 
-        List<Recipe> recipes = recipeMapper.toRecipeList(request.getRecipe());
+        category.setName(request.getName());
 
-        Category categoryUpdate = new Category(
-                category.getId(),
-                category.getName(),
-                recipes
-        );
-
-        categoryRepository.save(categoryUpdate);
+        categoryRepository.save(category);
 
         return CategoryResponse.builder()
-                .id(categoryUpdate.getId())
+                .id(category.getId())
                 .name(category.getName())
-                .recipe(recipeMapper.toRecipeResponseList(recipes))
                 .build();
 
     }
@@ -71,6 +62,15 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
+    public List<CategoryResponse> findAllCategories (){
+        List<Category> categories =  categoryRepository.findAll();
+        return categories.stream().map(categoryMapper::toCategoryResponse).collect(Collectors.toList());
+    }
+
+    public List<CategoryResponse> findAllCategoriesByName (String name){
+        List<Category> categories = categoryRepository.findByNameContainingIgnoreCase(name);
+        return categories.stream().map(categoryMapper::toCategoryResponse).collect(Collectors.toList());
+    }
 
 
 }

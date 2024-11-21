@@ -29,8 +29,13 @@ public class UserCreationRequest {
     @NotNull(message = "INVALID_DOB")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "MM/dd/yyyy")
-
     Date dob;
 
+    String firstName;
+
+    String lastName;
+
     List<String> roles;
+
+
 }

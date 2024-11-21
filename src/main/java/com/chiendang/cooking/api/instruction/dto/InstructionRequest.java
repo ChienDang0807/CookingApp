@@ -1,6 +1,7 @@
 package com.chiendang.cooking.api.instruction.dto;
 
 import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
+import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,9 +13,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InstructionRequest {
 
+
     Integer stepNumber;
 
     String description;
 
     RecipeRequest recipeId;
+
+    String addInfor1;
+
+    String addInfor2;
+
+
 }

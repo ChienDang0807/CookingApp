@@ -17,8 +17,7 @@ public class Instruction {
 
     @Id
     @Column(name = "instruction_id")
-    @GeneratedValue( generator = "instruction_seq")
-    @SequenceGenerator(name = "instruction_seq", sequenceName = "instruction_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "step_number")
@@ -30,4 +29,6 @@ public class Instruction {
     @ManyToOne
     @JoinColumn(name = "recipe_id")
     Recipe recipeId;
+
+
 }

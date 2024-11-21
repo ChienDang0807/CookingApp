@@ -2,6 +2,7 @@ package com.chiendang.cooking.api.recipe.entity;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.category.entity.Category;
+import com.chiendang.cooking.api.favorite_recipe.entity.FavoriteRecipe;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
 import com.chiendang.cooking.api.instruction.entity.Instruction;
 import com.chiendang.cooking.api.review.entiy.Review;
@@ -27,8 +28,7 @@ public class Recipe extends AbstractEntity {
 
     @Id
     @Column(name = "recipe_id")
-    @GeneratedValue(generator = "recipe_seq")
-    @SequenceGenerator(name = "recipe_seq", sequenceName = "recipe_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
      Integer id;
 
     @Column(name = "recipe_name", nullable = false)
@@ -41,7 +41,7 @@ public class Recipe extends AbstractEntity {
      String cookTime;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")
-     Set<Ingredient> ingredients = new HashSet<>();
+    Set<Ingredient> ingredients = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipeId")
      List<Instruction> instructions = new ArrayList<>();
@@ -51,18 +51,21 @@ public class Recipe extends AbstractEntity {
     @JoinColumn(name = "category_id")
      Category category;
 
-    @ManyToMany
-    @JoinTable(name = "review",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-     Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "recipe")
+    @JsonIgnore
+    List<Review> reviewers = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "recipe")
+    @JsonIgnore
+    Set<FavoriteRecipe> userFavoriteRecipe = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    User userCreated;
 
-    @Column(name = "image", nullable = false)
-     String image;
+    @Column(name = "image")
+    String image;
 
     @JsonIgnore // Stop infinite loop
     public Set<Ingredient> getIngredients() {
@@ -73,5 +76,6 @@ public class Recipe extends AbstractEntity {
     public List<Instruction> getInstructions() {
         return instructions;
     }
+
 
 }

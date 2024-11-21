@@ -15,7 +15,9 @@ public interface UserMapper {
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "recipe", ignore = true)
+    @Mapping(target = "recipeCreatedBy", ignore = true)
+    @Mapping(target = "forgotPassword", ignore = true)
+    @Mapping(target = "recipeFavorite", ignore = true)
     User toUser(UserCreationRequest request);
 
 
@@ -25,7 +27,9 @@ public interface UserMapper {
     @Mapping(target = "roles" ,ignore = true) // k gen thuoc tinh roles
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "recipe", ignore = true)
+    @Mapping(target = "forgotPassword", ignore = true)
+    @Mapping(target = "recipeFavorite", ignore = true)
     @Mapping(target = "email", ignore = true)
+    @Mapping(target = "recipeCreatedBy", ignore = true)
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
 }

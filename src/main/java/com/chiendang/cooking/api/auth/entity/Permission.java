@@ -17,6 +17,8 @@ public class Permission {
     @Id
     @Column(name = "permission_name")
     String name;
+
     @Column(name = "description")
     String description;
+
 }

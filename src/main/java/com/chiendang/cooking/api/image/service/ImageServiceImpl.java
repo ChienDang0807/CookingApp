@@ -1,5 +1,8 @@
 package com.chiendang.cooking.api.image.service;
 
+import com.chiendang.cooking.api.recipe.entity.Recipe;
+import com.chiendang.cooking.api.recipe.respository.RecipeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +12,9 @@ import java.nio.file.Paths;
 
 @Service
 public class ImageServiceImpl implements ImageService {
+
+    @Autowired
+    RecipeRepository recipeRepository;
     @Override
     public String uploadFile(String path, MultipartFile file) throws IOException {
         //get name of the file
@@ -25,6 +31,10 @@ public class ImageServiceImpl implements ImageService {
 
         //copy the file or upload file to the path
         Files.copy(file.getInputStream(), Paths.get(filePath));
+
+        Recipe recipe = new Recipe();
+        recipe.setImage(filePath);
+        recipeRepository.save(recipe);
         return fileName;
     }
 

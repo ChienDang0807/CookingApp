@@ -1,10 +1,12 @@
 package com.chiendang.cooking.api.category.entity;
 
 import com.chiendang.cooking.api.recipe.entity.Recipe;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,13 +22,15 @@ public class Category {
 
     @Id
     @Column(name = "category_id")
-    @GeneratedValue( generator = "category_seq")
-    @SequenceGenerator(name = "category_seq", sequenceName = "category_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "category_name")
     String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "category")
-    List<Recipe> recipe;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "category")
+    @JsonIgnore
+    List<Recipe> recipe = new ArrayList<>();
+
 }
