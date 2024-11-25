@@ -1,8 +1,6 @@
 
 server:
   port: 8083
-  servlet:
-    context-path: /cookingapp
 spring:
   application:
     name: CookingApp
@@ -31,10 +29,7 @@ project:
 base:
   url: "http://localhost:8083"
 
-jwt:
-  signerKey: "hlPp9x4GIOQVHBewHlAtg2PJtw98OFrY0IOmYv4EC9zpmU5sUcqBtP2rW+gsJ2vX"
-  valid-duration: 3600 #in second #het han sau
-  refreshable-duration: 120 #second #token moi co thoi han
+
 
 openapi:
   service:
@@ -42,3 +37,5 @@ openapi:
     server: http://localhost:8083
     title: API Service
     version: 1.0.0
+
+    # mat file application.properties r

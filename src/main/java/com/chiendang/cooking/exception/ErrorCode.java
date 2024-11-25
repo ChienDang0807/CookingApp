@@ -20,7 +20,8 @@ public enum ErrorCode {
     USER_EXISTED(1014,"User existed",HttpStatus.FORBIDDEN),
     USER_NOT_EXISTED(1015,"User not existed",HttpStatus.FORBIDDEN),
     CATEGORY_IS_EXISTED(1017, "Category is existed", HttpStatus.BAD_REQUEST),
-    LIST_EMPTY(1018, "List is empty", HttpStatus.BAD_REQUEST)
+    LIST_EMPTY(1018, "List is empty", HttpStatus.BAD_REQUEST),
+    EMAIL_INVALID(1010,"Please provide valid email",HttpStatus.BAD_REQUEST),
 
     ;
     int  code;
