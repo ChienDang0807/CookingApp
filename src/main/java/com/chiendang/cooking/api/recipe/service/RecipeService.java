@@ -31,6 +31,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -219,7 +220,7 @@ public class RecipeService {
             response.setImage(fileName);
             response.setCookTime(recipe.getCookTime());
             response.setPrepTime(recipe.getPrepTime());
-            response.setIngredients(ingredients.stream().map(ingredientMapper::toInIngredientResponse).toList());
+            response.setIngredients(ingredients.stream().map(ingredientMapper::toInIngredientResponse).collect(Collectors.toSet()));
             response.setInstructions(instructions.stream().map(instructionMapper::toInstructionResponse).toList());
             recipeResponses.add(response);
         }

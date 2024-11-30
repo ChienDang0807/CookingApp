@@ -1,7 +1,6 @@
 package com.chiendang.cooking.api.instruction.dto;
 
 import com.chiendang.cooking.api.recipe.dto.response.RecipeResponse;
-import com.chiendang.cooking.api.recipe.entity.Recipe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -23,5 +22,11 @@ public class InstructionResponse {
 
     @JsonIgnore
     RecipeResponse recipeId;
+
+    public InstructionResponse(Integer id, Integer stepNumber, String description) {
+        this.id = id;
+        this.stepNumber = stepNumber;
+        this.description = description;
+    }
 }
  
