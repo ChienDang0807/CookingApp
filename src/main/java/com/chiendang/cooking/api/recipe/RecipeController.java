@@ -37,9 +37,10 @@ public class RecipeController {
     @Operation(method = "GET", summary = "Get recipe limit", description = "Send a request via this API to get user")
     @GetMapping
     public ResponseData<PageResponse<?>> findRecipeByLimit(@RequestParam(value = "lastId", defaultValue = "0") long lastId,
-                                                           @Min(5) @RequestParam(value = "limit" , defaultValue = "10") int limit){
+                                                           @Min(5) @RequestParam(value = "limit" , defaultValue = "10") int limit,
+                                                           @RequestParam(value = "name", required = false) String recipeName){
         try {
-            return new ResponseData<>(HttpStatus.OK.value(), "Lấy danh sách thành công", recipeService.findRecipeByLimit(lastId,limit) );
+            return new ResponseData<>(HttpStatus.OK.value(), "Lấy danh sách thành công", recipeService.findRecipeByLimit(recipeName,lastId,limit) );
         }catch (AppExceptions e){
             return  new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         }

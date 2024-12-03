@@ -20,9 +20,5 @@ public class InstructionRequest {
 
     RecipeRequest recipeId;
 
-    String addInfor1;
-
-    String addInfor2;
-
 
 }

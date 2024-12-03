@@ -1,14 +1,11 @@
 package com.chiendang.cooking.api.recipe.service;
 
 import com.chiendang.cooking.api.auth.dto.response.UserResponse;
-import com.chiendang.cooking.api.auth.repository.UserRespository;
 import com.chiendang.cooking.api.category.mapper.CategoryMapper;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
 import com.chiendang.cooking.api.ingredient.mapper.IngredientMapper;
-import com.chiendang.cooking.api.ingredient.service.IngredientService;
 import com.chiendang.cooking.api.instruction.entity.Instruction;
 import com.chiendang.cooking.api.instruction.mapper.InstructionMapper;
-import com.chiendang.cooking.api.instruction.service.InstructionService;
 import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
 import com.chiendang.cooking.api.recipe.dto.response.PageResponse;
 import com.chiendang.cooking.api.recipe.dto.response.RecipeResponse;
@@ -24,6 +21,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -33,6 +31,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +39,7 @@ import java.util.Set;
 public class RecipeService {
 
     RecipeRepository recipeRepository;
-    UserRespository userRespository;
-    IngredientService ingredientService;
-    InstructionService instructionService;
+
     ImageService fileService;
     RecipeMapper recipeMapper;
     InstructionMapper instructionMapper;
@@ -143,26 +140,36 @@ public class RecipeService {
 
     }
 
-    public List<RecipeResponse> getAllRecipe (int pageNo, int pageSize){
+    public List<RecipeResponse> getAllRecipe (){
 
         List<Recipe> recipes = recipeRepository.findAll();
 
-        return recipeMapper.toRecipeResponseList(recipes);
+        return recipes.stream().map(recipeMapper::toRecipeResponse).toList();
     }
 
-    public PageResponse<?> findRecipeByLimit (long  lastId , int limit) {
+    public PageResponse<?> findRecipeByLimit (String name, long lastId , int limit) {
         List<Recipe> recipes;
 
-        // Nếu lastId là 0, gọi lần đầu tiên, còn lại là gọi tiếp theo
-        if (lastId == 0) {
-            // Gọi lần đầu với lastId = 0
-            recipes = recipeRepository.findRecipesByIdGreaterThan(0L, limit);
-        } else {
-            // Lần sau, truyền lastId là id của bản ghi cuối cùng trong list
-            recipes = recipeRepository.findRecipesByIdGreaterThan(lastId, limit);
+
+        if(StringUtils.hasLength(name)){
+            if (lastId == 0) {
+                // Gọi lần đầu với lastId = 0
+                recipes = recipeRepository.findRecipeByName(name,0L, limit);
+            } else {
+                // Lần sau, truyền lastId là id của bản ghi cuối cùng trong list
+                recipes = recipeRepository.findRecipeByName(name,lastId, limit);
+            }
+        }else {
+            if (lastId == 0) {
+                // Gọi lần đầu với lastId = 0
+                recipes = recipeRepository.findRecipesByIdGreaterThan(0L, limit);
+            } else {
+                // Lần sau, truyền lastId là id của bản ghi cuối cùng trong list
+                recipes = recipeRepository.findRecipesByIdGreaterThan(lastId, limit);
+            }
+
         }
 
-        // Nếu danh sách có dữ liệu, lấy id của phần tử cuối
         long newLastId = 0;  // Khởi tạo giá trị mặc định cho lastId
         if (recipes != null && !recipes.isEmpty()) {
             // Lấy ID của phần tử cuối cùng trong danh sách
@@ -213,8 +220,9 @@ public class RecipeService {
             response.setImage(fileName);
             response.setCookTime(recipe.getCookTime());
             response.setPrepTime(recipe.getPrepTime());
-            response.setIngredients(ingredients.stream().map(ingredientMapper::toInIngredientResponse).toList());
+            response.setIngredients(ingredients.stream().map(ingredientMapper::toInIngredientResponse).collect(Collectors.toSet()));
             response.setInstructions(instructions.stream().map(instructionMapper::toInstructionResponse).toList());
+            recipeResponses.add(response);
         }
         return recipeResponses;
     }

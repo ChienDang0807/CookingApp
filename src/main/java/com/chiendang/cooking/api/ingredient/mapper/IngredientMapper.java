@@ -1,18 +1,23 @@
 package com.chiendang.cooking.api.ingredient.mapper;
 
-import com.chiendang.cooking.api.ingredient.dto.IngredientRequest;
 import com.chiendang.cooking.api.ingredient.dto.IngredientResponse;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
-import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
-import com.chiendang.cooking.api.recipe.dto.response.RecipeResponse;
-import com.chiendang.cooking.api.recipe.entity.Recipe;
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Set;
+@Component
+public class IngredientMapper {
 
-@Mapper(componentModel = "spring")
-public interface IngredientMapper {
-    IngredientResponse toInIngredientResponse(Ingredient i);
+    public IngredientResponse toInIngredientResponse(Ingredient i) {
+        if (i == null) {
+            return null;
+        } else {
+            IngredientResponse.IngredientResponseBuilder ingredientResponse = IngredientResponse.builder();
+            ingredientResponse.id(i.getId());
+            ingredientResponse.name(i.getName());
+            ingredientResponse.amount(i.getAmount());
+
+            return ingredientResponse.build();
+        }
+    }
 
 }

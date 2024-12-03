@@ -2,10 +2,10 @@ package com.chiendang.cooking.api.favorite_recipe.entity;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.recipe.entity.Recipe;
-import com.chiendang.cooking.api.review.entiy.ReviewId;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 
 @Entity
 @Table(name = "favorite_recipe")
