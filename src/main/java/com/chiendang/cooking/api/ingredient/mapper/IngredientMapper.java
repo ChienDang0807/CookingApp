@@ -4,6 +4,8 @@ import com.chiendang.cooking.api.ingredient.dto.IngredientResponse;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class IngredientMapper {
 
@@ -18,6 +20,10 @@ public class IngredientMapper {
 
             return ingredientResponse.build();
         }
+    }
+
+    public List<IngredientResponse> toListIngredientResponse (List<Ingredient> list){
+        return list.stream().map(this::toInIngredientResponse).toList();
     }
 
 }

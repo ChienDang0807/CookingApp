@@ -6,13 +6,13 @@ services:
      - SYS_NICE
    restart: always
    environment:
-     - MYSQL_DATABASE=root
-     - MYSQL_ROOT_PASSWORD=abcd1234
+     - MYSQL_DATABASE= cooking_app
+     - MYSQL_ROOT_PASSWORD= abcd1234
    ports:
      - '3306:3306'
    volumes:
-     - mysql_data:/var/lib/myqsl
-     - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+     - mysql_data:/var/lib/mysql
+     - ./recipe1.sql:/docker-entrypoint-initdb.d/recipe1.sql
    networks:
      - default
 

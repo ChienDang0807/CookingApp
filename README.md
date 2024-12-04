@@ -28,16 +28,16 @@ mvn clean package -P dev|test|uat|prod
 ```
 - Jar statement
 ```bash
-java -jar target/backend-service.jar
+java -jar target/recipe-service.jar
 ```
 
 - Docker
 ```bash
-docker build -t backend-service .
-docker run -d backend-service:latest backend-service
+docker build -t recipe-service .
+docker run -d recipe-service:latest recipe-service
 ```
 
 ## Package application
 ```bash
-docker build -t backend-service .
+docker build -t recipe-service .
 ```

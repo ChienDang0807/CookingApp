@@ -10,7 +10,6 @@ import com.chiendang.cooking.api.auth.repository.RoleRespository;
 import com.chiendang.cooking.api.auth.repository.UserRespository;
 import com.chiendang.cooking.api.auth.service.UserService;
 import com.chiendang.cooking.exception.AppExceptions;
-import com.chiendang.cooking.utils.Role;
 import com.chiendang.cooking.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
         User user1 = userRespository.save(user);
         return userMapper.toUserResponse(user1);
+
     }
     @Override
     public  UserResponse getMyInfo(){

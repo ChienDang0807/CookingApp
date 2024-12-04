@@ -1,7 +1,7 @@
 package com.chiendang.cooking.api.ingredient.service;
 
+import com.chiendang.cooking.api.ingredient.dto.IngredientRequest;
 import com.chiendang.cooking.api.ingredient.dto.IngredientResponse;
-import com.chiendang.cooking.api.ingredient.entity.Ingredient;
 import com.chiendang.cooking.api.ingredient.mapper.IngredientMapper;
 import com.chiendang.cooking.api.ingredient.repository.IngredientRepository;
 import lombok.AccessLevel;
@@ -20,11 +20,14 @@ public class IngredientService {
 
 
 
+    public List<IngredientResponse> addListIngredient(List<IngredientRequest> list){
+
+        return List.of();
+    }
 
 
     public List<IngredientResponse> findAllIngredientByRecipeId(Integer id){
-        List<Ingredient> ingredients  = ingredientRepository.findAllByRecipeId(id);
-        return ingredients.stream().map(ingredientMapper::toInIngredientResponse).toList();
+        return  ingredientMapper.toListIngredientResponse(ingredientRepository.findAllByRecipeId(id));
     }
 
 

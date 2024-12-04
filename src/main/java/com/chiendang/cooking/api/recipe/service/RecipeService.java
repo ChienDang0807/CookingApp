@@ -12,7 +12,6 @@ import com.chiendang.cooking.api.recipe.dto.response.RecipeResponse;
 import com.chiendang.cooking.api.recipe.entity.Recipe;
 import com.chiendang.cooking.api.recipe.mapper.RecipeMapper;
 import com.chiendang.cooking.api.recipe.respository.RecipeRepository;
-import com.chiendang.cooking.api.image.service.ImageService;
 import com.chiendang.cooking.exception.AppExceptions;
 import com.chiendang.cooking.exception.ErrorCode;
 import lombok.AccessLevel;
@@ -40,7 +39,7 @@ public class RecipeService {
 
     RecipeRepository recipeRepository;
 
-    ImageService fileService;
+
     RecipeMapper recipeMapper;
     InstructionMapper instructionMapper;
     IngredientMapper ingredientMapper;
@@ -110,35 +109,35 @@ public class RecipeService {
         return recipeResponse;
     }
 
-    public RecipeResponse updateRecipe(Integer id, RecipeRequest request, MultipartFile file) throws IOException {
-        Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new AppExceptions(ErrorCode.RESOURCES_NOT_FOUND));
-
-        String fileName = recipe.getImage();
-        if (file != null){
-            // xoa file lien quan
-            Files.deleteIfExists(Paths.get(path + File.separator +recipe.getImage() ));
-            if (Files.exists(Paths.get(path + File.separator + file.getOriginalFilename()))){
-                throw  new AppExceptions(ErrorCode.FILE_IS_EXISTED);
-            }
-            fileName=fileService.uploadFile(path,file);
-        }
-
-        request.setImage(fileName);
-
-        Recipe recipeUpdate = recipeMapper.toRecipe(request);
-
-        recipeRepository.save(recipeUpdate);
-
-        String imageUrl = baseUrl + "/file/" + fileName;
-
-        RecipeResponse recipeResponse = recipeMapper.toRecipeResponse(recipeUpdate);
-
-        recipeResponse.setImageUrl(imageUrl);
-
-        return  recipeResponse;
-
-    }
+//    public RecipeResponse updateRecipe(Integer id, RecipeRequest request, MultipartFile file) throws IOException {
+//        Recipe recipe = recipeRepository.findById(id)
+//                .orElseThrow(() -> new AppExceptions(ErrorCode.RESOURCES_NOT_FOUND));
+//
+//        String fileName = recipe.getImage();
+//        if (file != null){
+//            // xoa file lien quan
+//            Files.deleteIfExists(Paths.get(path + File.separator +recipe.getImage() ));
+//            if (Files.exists(Paths.get(path + File.separator + file.getOriginalFilename()))){
+//                throw  new AppExceptions(ErrorCode.FILE_IS_EXISTED);
+//            }
+//            fileName=fileService.uploadFile(path,file);
+//        }
+//
+//        request.setImage(fileName);
+//
+//        Recipe recipeUpdate = recipeMapper.toRecipe(request);
+//
+//        recipeRepository.save(recipeUpdate);
+//
+//        String imageUrl = baseUrl + "/file/" + fileName;
+//
+//        RecipeResponse recipeResponse = recipeMapper.toRecipeResponse(recipeUpdate);
+//
+//        recipeResponse.setImageUrl(imageUrl);
+//
+//        return  recipeResponse;
+//
+//    }
 
     public List<RecipeResponse> getAllRecipe (){
 
