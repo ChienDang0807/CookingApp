@@ -1,8 +1,5 @@
 package com.chiendang.cooking.api.ingredient.dto;
 
-import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
-
-import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,8 +14,6 @@ public class IngredientRequest {
     String name;
 
     String amount;
-
-    RecipeRequest recipe;
 
 
 }

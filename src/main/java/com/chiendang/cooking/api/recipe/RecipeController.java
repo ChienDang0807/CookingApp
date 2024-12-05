@@ -4,7 +4,7 @@ import com.chiendang.cooking.api.auth.dto.response.ResponseData;
 import com.chiendang.cooking.api.auth.dto.response.ResponseError;
 import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
 import com.chiendang.cooking.api.recipe.dto.response.PageResponse;
-import com.chiendang.cooking.api.recipe.service.RecipeService;
+import com.chiendang.cooking.api.recipe.service.RecipeServiceImpl;
 import com.chiendang.cooking.exception.AppExceptions;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "recipe")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RecipeController {
-    RecipeService recipeService;
+    RecipeServiceImpl recipeService;
 
 //    @Operation(method = "POST", summary = "Add new user", description = "Send a request via this API to create new user")
 //    @PostMapping

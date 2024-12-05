@@ -3,6 +3,7 @@ package com.chiendang.cooking.api.ingredient;
 import com.chiendang.cooking.api.auth.dto.response.ResponseData;
 import com.chiendang.cooking.api.auth.dto.response.ResponseError;
 import com.chiendang.cooking.api.ingredient.service.IngredientService;
+import com.chiendang.cooking.api.ingredient.service.IngredientServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IngredientController {
     private final IngredientService ingredientService;
 
-    public IngredientController(IngredientService ingredientService) {
+    public IngredientController(IngredientServiceImpl ingredientService) {
         this.ingredientService = ingredientService;
     }
 

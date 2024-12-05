@@ -1,12 +1,27 @@
 package com.chiendang.cooking.api.instruction.mapper;
 
+import com.chiendang.cooking.api.instruction.dto.InstructionRequest;
 import com.chiendang.cooking.api.instruction.dto.InstructionResponse;
 import com.chiendang.cooking.api.instruction.entity.Instruction;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Component
 public class InstructionMapper {
+    public Instruction toInstruction (InstructionRequest request){
+        if (request == null){
+            return null;
+        }else {
+            Instruction.InstructionBuilder instruction = Instruction.builder();
+            instruction.description(request.getDescription());
+            instruction.stepNumber(request.getStepNumber());
+            return instruction.build();
+        }
+    }
+
     public InstructionResponse toInstructionResponse(Instruction instruction) {
         if (instruction == null) {
             return null;
@@ -18,6 +33,13 @@ public class InstructionMapper {
 
             return instructionResponse.build();
         }
+    }
+
+    public List<InstructionResponse> toListInstructionResponse(List<Instruction> list){
+        return list.stream().map(this::toInstructionResponse).collect(Collectors.toList());
+    }
+    public List<Instruction> toListInstruction (List<InstructionRequest> requests){
+        return requests.stream().map(this::toInstruction).collect(Collectors.toList());
     }
 
 }

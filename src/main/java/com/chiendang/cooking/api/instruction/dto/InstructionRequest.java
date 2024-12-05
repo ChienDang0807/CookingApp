@@ -1,7 +1,5 @@
 package com.chiendang.cooking.api.instruction.dto;
 
-import com.chiendang.cooking.api.recipe.dto.request.RecipeRequest;
-import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,8 +15,6 @@ public class InstructionRequest {
     Integer stepNumber;
 
     String description;
-
-    RecipeRequest recipeId;
 
 
 }

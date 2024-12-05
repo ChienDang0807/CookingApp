@@ -1,17 +1,8 @@
 package com.chiendang.cooking.api.review.service;
 
-import com.chiendang.cooking.api.auth.dto.response.UserResponse;
-import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.auth.service.UserService;
-import com.chiendang.cooking.api.recipe.dto.response.RecipeResponse;
-import com.chiendang.cooking.api.recipe.service.RecipeService;
-import com.chiendang.cooking.api.review.dto.ReviewRequest;
-import com.chiendang.cooking.api.review.dto.ReviewResponse;
-import com.chiendang.cooking.api.review.entiy.Review;
-import com.chiendang.cooking.api.review.entiy.ReviewId;
+import com.chiendang.cooking.api.recipe.service.RecipeServiceImpl;
 import com.chiendang.cooking.api.review.repository.ReviewRepository;
-import com.chiendang.cooking.exception.AppExceptions;
-import com.chiendang.cooking.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +13,7 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE , makeFinal = true)
  public class ReviewService {
     ReviewRepository reviewRepository;
-    RecipeService recipeService;
+    RecipeServiceImpl recipeService;
     UserService userService;
 
 

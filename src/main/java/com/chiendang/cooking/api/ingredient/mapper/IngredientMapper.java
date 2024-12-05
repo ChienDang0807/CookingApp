@@ -1,13 +1,26 @@
 package com.chiendang.cooking.api.ingredient.mapper;
 
+import com.chiendang.cooking.api.ingredient.dto.IngredientRequest;
 import com.chiendang.cooking.api.ingredient.dto.IngredientResponse;
 import com.chiendang.cooking.api.ingredient.entity.Ingredient;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class IngredientMapper {
+
+    public Ingredient toIngredient(IngredientRequest request){
+        if (request== null){
+            return null;
+        }else {
+            Ingredient.IngredientBuilder ingredient = Ingredient.builder();
+                    ingredient.name(request.getName());
+                    ingredient.amount(request.getAmount());
+            return  ingredient.build();
+        }
+    }
 
     public IngredientResponse toInIngredientResponse(Ingredient i) {
         if (i == null) {
@@ -22,8 +35,12 @@ public class IngredientMapper {
         }
     }
 
-    public List<IngredientResponse> toListIngredientResponse (List<Ingredient> list){
-        return list.stream().map(this::toInIngredientResponse).toList();
+    public Set<IngredientResponse> toListIngredientResponse (Set<Ingredient> set){
+        return set.stream().map(this::toInIngredientResponse).collect(Collectors.toSet());
+    }
+
+    public Set<Ingredient> toListIngredient (Set<IngredientRequest> set){
+        return set.stream().map(this::toIngredient).collect(Collectors.toSet());
     }
 
 }
