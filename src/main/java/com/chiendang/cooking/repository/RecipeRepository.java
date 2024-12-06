@@ -13,7 +13,7 @@ public interface RecipeRepository extends JpaRepository<Recipe,Integer> {
 
     @Query(value = """
         SELECT * FROM recipe r
-        ORDER BY r.recipe_id ASC 
+        ORDER BY r.recipe_id ASC
         LIMIT :limit OFFSET :offset
         """, nativeQuery = true)
     List<Recipe> findAllRecipe(@Param("offset") int offSet, @Param("limit") int limit);
