@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.review.entiy;
+package com.chiendang.cooking.entity.favorite_recipe;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.entity.Recipe;
@@ -6,24 +6,22 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+
 @Entity
-@Table
+@Table(name = "favorite_recipe")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Review  {
+public class FavoriteRecipe {
 
     @EmbeddedId
-    ReviewId id;
+    FavoriteRecipeId id;
 
-    @Column(name = "comment_content")
-    String comment;
-
-    @Column(name = "rating")
-    Integer rating;
+    @Column(name = "is_Favorite")
+    Boolean isFavorite;
 
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -34,6 +32,4 @@ public class Review  {
     private Recipe recipe;
 
 
-
 }
-

@@ -1,7 +1,7 @@
 package com.chiendang.cooking.api.review.service;
 
 import com.chiendang.cooking.api.auth.service.UserService;
-import com.chiendang.cooking.api.recipe.service.RecipeServiceImpl;
+import com.chiendang.cooking.service.impl.RecipeServiceImpl;
 import com.chiendang.cooking.api.review.repository.ReviewRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.review.entiy;
+package com.chiendang.cooking.entity.favorite_recipe;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.entity.Recipe;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public   class ReviewId implements Serializable {
+public class FavoriteRecipeId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -25,4 +25,5 @@ public   class ReviewId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
+
 }

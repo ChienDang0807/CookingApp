@@ -1,9 +1,9 @@
 package com.chiendang.cooking.api.auth.entity;
 
-import com.chiendang.cooking.api.favorite_recipe.entity.FavoriteRecipe;
-import com.chiendang.cooking.api.forgotpassword.entity.ForgotPassword;
-import com.chiendang.cooking.api.recipe.entity.AbstractEntity;
-import com.chiendang.cooking.api.recipe.entity.Recipe;
+import com.chiendang.cooking.entity.favorite_recipe.FavoriteRecipe;
+import com.chiendang.cooking.entity.ForgotPassword;
+import com.chiendang.cooking.entity.AbstractEntity;
+import com.chiendang.cooking.entity.Recipe;
 import com.chiendang.cooking.api.review.entiy.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
