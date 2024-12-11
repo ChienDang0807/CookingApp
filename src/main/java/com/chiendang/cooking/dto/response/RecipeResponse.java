@@ -33,5 +33,7 @@ public class RecipeResponse {
 
     String image;
 
+    Integer rating;
+
     String imageUrl;
 }

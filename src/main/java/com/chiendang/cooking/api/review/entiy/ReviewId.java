@@ -1,10 +1,10 @@
 package com.chiendang.cooking.api.review.entiy;
 
-import com.chiendang.cooking.api.auth.entity.User;
-import com.chiendang.cooking.entity.Recipe;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,12 @@ import java.io.Serializable;
 @Getter
 @Setter
 public   class ReviewId implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @ManyToOne
-    @JoinColumn(name = "recipe_id")
-    private Recipe recipe;
+    @Column(name = "recipe_id")
+    private Integer recipeId;
+
+    @Column(name = "comment_index")
+    private String commentIndex;
 }

@@ -5,25 +5,23 @@ import com.chiendang.cooking.entity.Recipe;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ReviewRequest {
+public class ReviewRequest implements Serializable {
 
-    private User user;
+    Integer userId;
 
-    private Recipe recipe;
+    Integer recipeId;
 
     String comment;
 
     Integer rating;
 
-    String addInfor1;
 
-    String addInfor2;
-
-    String addInfor3;
 }

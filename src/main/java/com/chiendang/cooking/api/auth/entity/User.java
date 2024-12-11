@@ -65,5 +65,9 @@ public class User extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "role_name"))
     Set<Role> roles;
 
-
+    public User(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

@@ -64,6 +64,11 @@ public class Recipe extends AbstractEntity {
     @Column(name = "image")
     String image;
 
+    @Column(name = "rating")
+    Integer rating;
+
+
+
     @JsonIgnore // Stop infinite loop
     public Set<Ingredient> getIngredients() {
         return ingredients;

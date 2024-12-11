@@ -184,7 +184,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
 
-     Recipe getRecipeInfo( Integer recipeId){
+    public Recipe getRecipeInfo( Integer recipeId){
          return recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new AppExceptions(ErrorCode.RESOURCES_NOT_FOUND));
     }

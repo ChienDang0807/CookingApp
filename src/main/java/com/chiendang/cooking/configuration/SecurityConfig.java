@@ -44,20 +44,20 @@ public class SecurityConfig {
     // 2 endpoint đăng kí và xác nhận token cân đc tự do truy cập
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(request ->
-                request
-                        .requestMatchers(HttpMethod.POST, "/forgot-password/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-
-                        // Allow GET requests for Swagger and OpenAPI documentation
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui*/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v3/**").permitAll()
-
-                        // Allow GET requests for public resources, e.g., recipes
-                        .requestMatchers(HttpMethod.GET, "/api/v1/recipes/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/categories/**").permitAll()
-                        .anyRequest().authenticated()); // nếu k có url nào trùng vs cái trên thì yêu cầu xác thực
+        httpSecurity.authorizeHttpRequests(request -> request.anyRequest().permitAll());
+//                request
+//                        .requestMatchers(HttpMethod.POST, "/forgot-password/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+//
+//                        // Allow GET requests for Swagger and OpenAPI documentation
+//                        .requestMatchers(HttpMethod.GET, "/swagger-ui*/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/v3/**").permitAll()
+//
+//                        // Allow GET requests for public resources, e.g., recipes
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/recipes/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET,"/api/v1/categories/**").permitAll()
+//                        .anyRequest().authenticated()); // nếu k có url nào trùng vs cái trên thì yêu cầu xác thực
 
         // vấn đề: khi request có một  token trong header
         // ResourceServer bắt đầu xác thực

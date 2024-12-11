@@ -26,13 +26,14 @@ public class Review  {
     Integer rating;
 
     @ManyToOne
+    @MapsId("userId")
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     @ManyToOne
+    @MapsId("recipeId")
     @JoinColumn(name = "recipe_id", insertable = false, updatable = false)
     private Recipe recipe;
-
 
 
 }

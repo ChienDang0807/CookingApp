@@ -29,4 +29,10 @@ public class UserResponse {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public UserResponse(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

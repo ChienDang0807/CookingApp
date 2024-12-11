@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserById(Integer id) {
-        return userRespository.findById(id);
+        return Optional.ofNullable(userRespository.findById(id).orElseThrow(() -> new AppExceptions(ErrorCode.USER_NOT_EXISTED)));
     }
 
     @Override

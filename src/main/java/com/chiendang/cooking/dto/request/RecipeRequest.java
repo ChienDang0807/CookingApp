@@ -28,16 +28,8 @@ public class RecipeRequest {
 
     Category category;
 
-
     String image;
+    Integer rating;
 
-    @NotBlank(message = "NOT_BLANK")
-    String imageUrl;
-
-    String addInfor1;
-
-    String addInfor2;
-
-    String addInfor3;
 
 }
