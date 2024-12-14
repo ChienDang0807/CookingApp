@@ -1,11 +1,8 @@
 package com.chiendang.cooking.entity.favorite_recipe;
 
-import com.chiendang.cooking.api.auth.entity.User;
-import com.chiendang.cooking.entity.Recipe;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

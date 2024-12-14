@@ -1,7 +1,6 @@
 package com.chiendang.cooking.exception;
 
 import com.chiendang.cooking.api.auth.dto.response.ResponseData;
-import com.chiendang.cooking.api.auth.dto.response.ResponseError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

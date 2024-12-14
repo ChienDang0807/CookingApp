@@ -11,8 +11,6 @@ import com.chiendang.cooking.entity.Ingredient;
 import com.chiendang.cooking.mapper.IngredientMapper;
 import com.chiendang.cooking.entity.Instruction;
 import com.chiendang.cooking.mapper.InstructionMapper;
-import com.chiendang.cooking.service.IngredientService;
-import com.chiendang.cooking.service.InstructionService;
 import com.chiendang.cooking.service.RecipeService;
 import com.chiendang.cooking.utils.ImageType;
 import com.chiendang.cooking.utils.PageResponse;

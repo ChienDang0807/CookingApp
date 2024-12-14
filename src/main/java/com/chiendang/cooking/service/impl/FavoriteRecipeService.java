@@ -1,6 +1,5 @@
 package com.chiendang.cooking.service.impl;
 
-import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.auth.repository.UserRespository;
 import com.chiendang.cooking.entity.favorite_recipe.FavoriteRecipe;
 import com.chiendang.cooking.entity.favorite_recipe.FavoriteRecipeId;
@@ -13,7 +12,6 @@ import com.chiendang.cooking.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

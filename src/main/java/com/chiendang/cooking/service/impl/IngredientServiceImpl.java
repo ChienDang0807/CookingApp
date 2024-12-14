@@ -41,19 +41,6 @@ public class IngredientServiceImpl implements IngredientService {
         return  ingredientMapper.toListIngredientResponse(new HashSet<>(ingredientRepository.findAllByRecipeId(id)));
     }
 
-    @Override
-    public Set<IngredientResponse> updateAllIngredientByRecipeId(Integer recipeId, Set<IngredientRequest> list) {
-        if (list == null || list.isEmpty()) {
-            throw new IllegalArgumentException("The list of ingredients is null or empty.");
-        }
-        Set<Ingredient> ingredientUpdate = ingredientMapper.toListIngredient(list);
-
-        Set<Ingredient> ingredients = new HashSet<>(ingredientRepository.findAllByRecipeId(recipeId));
-
-        return Set.of();
-    }
-
-
 
 
 }
