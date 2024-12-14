@@ -1,4 +1,4 @@
-package com.chiendang.cooking.service.impl;
+package com.chiendang.cooking.service;
 
 
 import com.chiendang.cooking.utils.MailBody;

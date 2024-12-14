@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,13 +23,21 @@ import java.util.List;
 public class FavoriteRecipeController {
     FavoriteRecipeService favoriteRecipeService;
 
-    @GetMapping
-    public ResponseData<List<RecipeResponse>> getFavoriteRecipe(){
+    @GetMapping("/{id}")
+    public ResponseData<List<RecipeResponse>> getFavoriteRecipe(@PathVariable Integer id){
         try {
             log.info("Get favorite recipe successfully");
-            return new ResponseData<>(HttpStatus.OK.value(), "Get recipe succesfully",favoriteRecipeService.getFavoriteRecipes());
+            return new ResponseData<>(HttpStatus.OK.value(), "Get recipe succesfully",favoriteRecipeService.getFavoriteRecipes(id));
         }catch (Exception e){
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         }
     }
+
+    @PostMapping("/{userId}/{recipeId}/toggle")
+    public ResponseData<?> toggleFavorite(@PathVariable("userId") Integer userId, @PathVariable("recipeId") Integer recipeId) {
+        Boolean isFavorite = favoriteRecipeService.toggleFavorite(userId, recipeId);
+        String message = isFavorite ? "Recipe has been marked as favorite." : "Recipe has been removed from favorites.";
+        return new ResponseData<>(HttpStatus.CREATED.value(),message);
+    }
+
 }

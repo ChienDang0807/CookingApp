@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.image.dto;
+package com.chiendang.cooking.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserImageResponse {
+public class ImageResponse {
     Long id;
     String imageUrl;
     String cloudImageId;

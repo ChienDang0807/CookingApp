@@ -1,12 +1,20 @@
 package com.chiendang.cooking.service.impl;
 
 import com.chiendang.cooking.api.auth.dto.response.UserResponse;
+import com.chiendang.cooking.api.auth.entity.User;
+import com.chiendang.cooking.api.auth.service.UserService;
+import com.chiendang.cooking.entity.Image;
+import com.chiendang.cooking.service.ImageService;
+import com.chiendang.cooking.dto.request.RecipeRequest;
 import com.chiendang.cooking.mapper.CategoryMapper;
 import com.chiendang.cooking.entity.Ingredient;
 import com.chiendang.cooking.mapper.IngredientMapper;
 import com.chiendang.cooking.entity.Instruction;
 import com.chiendang.cooking.mapper.InstructionMapper;
+import com.chiendang.cooking.service.IngredientService;
+import com.chiendang.cooking.service.InstructionService;
 import com.chiendang.cooking.service.RecipeService;
+import com.chiendang.cooking.utils.ImageType;
 import com.chiendang.cooking.utils.PageResponse;
 import com.chiendang.cooking.dto.response.RecipeResponse;
 import com.chiendang.cooking.entity.Recipe;
@@ -17,11 +25,11 @@ import com.chiendang.cooking.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -32,107 +40,69 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     RecipeRepository recipeRepository;
-
-
     RecipeMapper recipeMapper;
     InstructionMapper instructionMapper;
     IngredientMapper ingredientMapper;
     CategoryMapper categoryMapper;
+    ImageService imageService;
+    UserService userService;
 
 
-    @NonFinal
-    @Value("${project.foodimage}")
-    String path;
+    public RecipeResponse createNewRecipe(RecipeRequest request, MultipartFile file, Integer userId) throws IOException {
+        User userCreated = userService.getUserById(userId)
+                .orElseThrow(() ->new AppExceptions(ErrorCode.USER_NOT_EXISTED));
 
-    @NonFinal
-    @Value("${base.url}")
-    String baseUrl;
+        List<Instruction> instructions = instructionMapper.toListInstruction(request.getInstructions());
+        Set<Ingredient> ingredients = ingredientMapper.toListIngredient(request.getIngredients());
 
+        Recipe recipe = Recipe.builder()
+                .recipeName(request.getRecipeName())
+                .category(request.getCategory())
+                .cookTime(request.getCookTime())
+                .prepTime(request.getPrepTime())
+                .rating(request.getRating())
+                .instructions(instructions)
+                .ingredients(ingredients)
+                .userCreated(userCreated)
+                .build();
 
+        Recipe recipeSaved = recipeRepository.save(recipe);
 
-//    @PreAuthorize("hasRole('USER')")
-//    public RecipeResponse addRecipe(RecipeRequest request, MultipartFile file) throws IOException {
-//        if (Files.exists(Paths.get(path + File.separator + file.getOriginalFilename()))){
-//            throw  new AppExceptions(ErrorCode.FILE_IS_EXISTED);
-//        }
-//        String uploadedFileName = fileService.uploadFile(path,file);
-//        //2. set the value of field 'poster' as filename
-//        request.setImage(uploadedFileName);
-//        // lay thong tin nguoi dung hien tai
-//        var context = SecurityContextHolder.getContext();
-//        String name= context.getAuthentication().getName();
-//        User user = userRespository.findByEmail(name)
-//                .orElseThrow(() -> new AppExceptions(ErrorCode.USER_NOT_EXISTED));
-//
-//        Recipe recipe = Recipe.builder()
-//                .recipeName(request.getRecipeName())
-//                .prepTime(request.getPrepTime())
-//                .cookTime(request.getCookTime())
-//                .category(request.getCategory())
-//                .userCreated(user)
-//                .image(request.getImage())
-//                .build();
-//
-//        Recipe savedRecipe =  recipeRepository.save(recipe);
-//        try{
-//            request.getIngredients().forEach(ingredientService::addIngredient);
-//            request.getInstructions().forEach(instructionService::addInstruction);
-//        } catch (Exception e) {
-//            throw new RuntimeException("Error saving recipe details", e);
-//        }
-//
-//        savedRecipe.setInstructions(instructionMapper.toInstructionList(request.getInstructions()));
-//        savedRecipe.setIngredients(ingredientMapper.toIngredientList(new HashSet<>(request.getIngredients())));
-//
-//        String imageUrl = baseUrl + "/file/" +uploadedFileName;
-//
-//        RecipeResponse recipeResponse = recipeMapper.toRecipeResponse(savedRecipe);
-//
-//        recipeResponse.setImageUrl(imageUrl);
-//
-//        return  recipeResponse;
-//    }
+        Image image = imageService.createUserImage(file,recipeSaved.getId(), ImageType.RECIPE);
+
+        recipeSaved.setImage(image.getImageUrl());
+
+       return recipeMapper.toRecipeResponse(recipeRepository.save(recipeSaved));
+    }
 
     public RecipeResponse getRecipe (Integer recipeId){
         Recipe recipe = this.getRecipeInfo(recipeId);
-
-        String imageUrl = baseUrl + "/file/" + recipe.getImage();
-
-        RecipeResponse recipeResponse = recipeMapper.toRecipeResponse(recipe);
-        recipeResponse.setImageUrl(imageUrl);
-
-        return recipeResponse;
+        return recipeMapper.toRecipeResponse(recipe);
     }
 
-//    public RecipeResponse updateRecipe(Integer id, RecipeRequest request, MultipartFile file) throws IOException {
-//        Recipe recipe = recipeRepository.findById(id)
-//                .orElseThrow(() -> new AppExceptions(ErrorCode.RESOURCES_NOT_FOUND));
-//
-//        String fileName = recipe.getImage();
-//        if (file != null){
-//            // xoa file lien quan
-//            Files.deleteIfExists(Paths.get(path + File.separator +recipe.getImage() ));
-//            if (Files.exists(Paths.get(path + File.separator + file.getOriginalFilename()))){
-//                throw  new AppExceptions(ErrorCode.FILE_IS_EXISTED);
-//            }
-//            fileName=fileService.uploadFile(path,file);
-//        }
-//
-//        request.setImage(fileName);
-//
-//        Recipe recipeUpdate = recipeMapper.toRecipe(request);
-//
-//        recipeRepository.save(recipeUpdate);
-//
-//        String imageUrl = baseUrl + "/file/" + fileName;
-//
-//        RecipeResponse recipeResponse = recipeMapper.toRecipeResponse(recipeUpdate);
-//
-//        recipeResponse.setImageUrl(imageUrl);
-//
-//        return  recipeResponse;
-//
-//    }
+    public RecipeResponse updateRecipe(Integer id, RecipeRequest request, MultipartFile file) throws IOException {
+        List<Instruction> instructions = instructionMapper.toListInstruction(request.getInstructions());
+        Set<Ingredient> ingredients = ingredientMapper.toListIngredient(request.getIngredients());
+
+        Image image = imageService.createUserImage(file,id,ImageType.RECIPE);
+
+        Recipe recipe = recipeRepository.findByid(id);
+
+        recipe.setImage(image.getImageUrl());
+        recipe.setRecipeName(request.getRecipeName());
+        recipe.setRating(request.getRating());
+        recipe.setCookTime(request.getCookTime());
+        recipe.setCategory(request.getCategory());
+        recipe.setPrepTime(request.getPrepTime());
+        recipe.getInstructions().clear();
+        recipe.getInstructions().addAll(instructions);
+        recipe.getIngredients().clear();
+        recipe.getIngredients().addAll(ingredients);
+
+        Recipe recipeUpdated=recipeRepository.save(recipe);
+
+        return recipeMapper.toRecipeResponse(recipeUpdated);
+    }
 
     @Override
     public List<RecipeResponse> getAllRecipe (){
@@ -201,18 +171,13 @@ public class RecipeServiceImpl implements RecipeService {
             Set<Ingredient> ingredients = recipe.getIngredients();
             List<Instruction> instructions = recipe.getInstructions();
 
-            //imageUrl
-            String fileName = recipe.getImage();
-            String imageUrl = baseUrl + "/file/" + fileName;
-
 
             RecipeResponse response = new RecipeResponse();
-            response.setImageUrl(imageUrl);
             response.setRecipeName(recipe.getRecipeName());
             response.setId(recipe.getId());
             response.setCategory(categoryMapper.toCategoryResponse(recipe.getCategory()));
             response.setUser(new UserResponse(recipe.getUserCreated().getFirstName(), recipe.getUserCreated().getLastName()));
-            response.setImage(fileName);
+            response.setImage(recipe.getImage());
             response.setCookTime(recipe.getCookTime());
             response.setPrepTime(recipe.getPrepTime());
             response.setIngredients(ingredientMapper.toListIngredientResponse(ingredients));

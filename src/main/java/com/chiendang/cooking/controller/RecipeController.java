@@ -3,6 +3,7 @@ package com.chiendang.cooking.controller;
 import com.chiendang.cooking.api.auth.dto.response.ResponseData;
 import com.chiendang.cooking.api.auth.dto.response.ResponseError;
 import com.chiendang.cooking.dto.request.RecipeRequest;
+import com.chiendang.cooking.dto.response.RecipeResponse;
 import com.chiendang.cooking.utils.PageResponse;
 import com.chiendang.cooking.service.impl.RecipeServiceImpl;
 import com.chiendang.cooking.exception.AppExceptions;
@@ -15,7 +16,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/recipes")
@@ -25,13 +30,15 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
     RecipeServiceImpl recipeService;
 
-//    @Operation(method = "POST", summary = "Add new user", description = "Send a request via this API to create new user")
-//    @PostMapping
-//    public ResponseData<RecipeResponse> uploadFile(@RequestPart MultipartFile file,@RequestPart RecipeRequest dto) throws IOException {
-//        if(file.isEmpty()){ throw  new AppExceptions(ErrorCode.FILE_EMPTY);}
-//
-//        return  new ResponseData<>(HttpStatus.CREATED.value(), "Thêm công thuc thanh cong !!", recipeService.addRecipe(dto,file));
-//    }
+    @Operation(method = "POST", summary = "Add new user", description = "Send a request via this API to create new user")
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseData<RecipeResponse> createNewRecipe(@RequestParam(name = "file") MultipartFile file,
+                                                        @RequestParam(name = "request") String request,
+                                                        @RequestParam(name = "userId") Integer userId) throws IOException {
+
+        RecipeRequest recipeRequest = convertToRecipeRequest(request);
+        return  new ResponseData<>(HttpStatus.CREATED.value(), "Thêm công thuc thanh cong !!", recipeService.createNewRecipe(recipeRequest,file,userId));
+    }
 
 
     @Operation(method = "GET", summary = "Get recipe limit", description = "Send a request via this API to get user")

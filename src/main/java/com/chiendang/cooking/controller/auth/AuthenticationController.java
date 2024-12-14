@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.auth.controller;
+package com.chiendang.cooking.controller.auth;
 
 
 import com.chiendang.cooking.api.auth.dto.request.AuthenticationRequest;

@@ -1,13 +1,14 @@
 package com.chiendang.cooking.controller;
 
 import com.chiendang.cooking.api.auth.dto.response.ResponseData;
+import com.chiendang.cooking.api.auth.dto.response.ResponseError;
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.api.auth.repository.UserRespository;
 import com.chiendang.cooking.entity.ForgotPassword;
 import com.chiendang.cooking.utils.ChangePassword;
 import com.chiendang.cooking.utils.MailBody;
 import com.chiendang.cooking.repository.ForgotPasswordRepository;
-import com.chiendang.cooking.service.impl.EmailService;
+import com.chiendang.cooking.service.EmailService;
 import com.chiendang.cooking.exception.AppExceptions;
 import com.chiendang.cooking.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
@@ -67,12 +68,12 @@ public class ForgotPasswordController   {
                 .orElseThrow(() -> new AppExceptions(ErrorCode.EMAIL_INVALID));
 
         ForgotPassword forgotPassword = forgotPasswordRepository.findByOtpAndUser(otp,user)
-                .orElseThrow(()-> new RuntimeException("Invalid OTP for email"  + email));
+                .orElseThrow(()-> new RuntimeException("Invalid OTP for email: "  + email));
 
         //kiem tra het han chua
         if (forgotPassword.getExpirationTime().before(Date.from(Instant.now()))){
             forgotPasswordRepository.deleteById(forgotPassword.getFpid());
-            return new ResponseData<>(HttpStatus.EXPECTATION_FAILED.value(), "OTP has expired");
+            return new ResponseError(HttpStatus.EXPECTATION_FAILED.value(), "OTP has expired");
         }
         return new ResponseData<>(HttpStatus.OK.value(), "OTP verified!");
     }
@@ -82,7 +83,7 @@ public class ForgotPasswordController   {
     public  ResponseData<String> changePasswordHandler (@RequestBody ChangePassword changePassword,
                                                         @PathVariable String email){
         if(!Objects.equals(changePassword.password(),changePassword.repeatPassword())){
-            return  new ResponseData<>(HttpStatus.EXPECTATION_FAILED.value(), "Please enter the password again");
+            return  new ResponseError(HttpStatus.EXPECTATION_FAILED.value(), "Please enter the password again");
         }
 
         String encodedPassword = passwordEncoder.encode(changePassword.password());

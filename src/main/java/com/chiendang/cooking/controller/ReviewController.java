@@ -1,14 +1,13 @@
-package com.chiendang.cooking.api.review;
+package com.chiendang.cooking.controller;
 
 import com.chiendang.cooking.api.auth.dto.response.ResponseData;
 import com.chiendang.cooking.api.auth.dto.response.ResponseError;
-import com.chiendang.cooking.api.review.dto.ReviewRequest;
-import com.chiendang.cooking.api.review.dto.ReviewResponse;
-import com.chiendang.cooking.api.review.entiy.Review;
-import com.chiendang.cooking.api.review.entiy.ReviewId;
-import com.chiendang.cooking.api.review.service.ReviewService;
+import com.chiendang.cooking.dto.request.ReviewRequest;
+import com.chiendang.cooking.dto.request.UpdateReviewRequest;
+import com.chiendang.cooking.dto.response.ReviewResponse;
+import com.chiendang.cooking.entity.review.ReviewId;
+import com.chiendang.cooking.service.impl.ReviewService;
 import com.chiendang.cooking.exception.AppExceptions;
-import com.chiendang.cooking.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -51,7 +50,15 @@ public class ReviewController {
     @GetMapping("/{recipeId}")
     public ResponseData<?> getAllReviewByRecipeId(@PathVariable Integer recipeId){
         try{
-            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Xóa comment thành công",reviewService.getAllReviewByRecipeId(recipeId));
+            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Lấy hết các comment của món ăn",reviewService.getAllReviewByRecipeId(recipeId));
+        }catch (AppExceptions e){
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseData<?> updateReview(@RequestBody UpdateReviewRequest request){
+        try{
+            return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update comment thành công",reviewService.updateComment(request));
         }catch (AppExceptions e){
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         }

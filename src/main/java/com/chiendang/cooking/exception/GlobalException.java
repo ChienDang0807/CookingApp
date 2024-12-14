@@ -1,6 +1,7 @@
 package com.chiendang.cooking.exception;
 
 import com.chiendang.cooking.api.auth.dto.response.ResponseData;
+import com.chiendang.cooking.api.auth.dto.response.ResponseError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -29,6 +30,16 @@ public class GlobalException {
         errorResponse.setStatus(errorCode.getCode());
         errorResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
         errorResponse.setMessage(errorCode.getMessage());
+        return  errorResponse;
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ErrorResponse handlingRuntimeException(RuntimeException e , WebRequest request){
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setTimeStamp(new Date());
+        errorResponse.setPath(request.getDescription(false).replace("uri=","")); // false: k lay dia chi ip cua client
+        errorResponse.setMessage(e.getMessage());
         return  errorResponse;
     }
 

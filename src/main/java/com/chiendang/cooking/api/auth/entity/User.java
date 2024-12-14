@@ -4,7 +4,7 @@ import com.chiendang.cooking.entity.favorite_recipe.FavoriteRecipe;
 import com.chiendang.cooking.entity.ForgotPassword;
 import com.chiendang.cooking.entity.AbstractEntity;
 import com.chiendang.cooking.entity.Recipe;
-import com.chiendang.cooking.api.review.entiy.Review;
+import com.chiendang.cooking.entity.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 

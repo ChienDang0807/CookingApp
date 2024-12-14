@@ -27,7 +27,6 @@ public interface RecipeMapper {
 
     Recipe toRecipe(RecipeRequest request);
 
-    @Mapping(target = "imageUrl", ignore = true)
     @Mapping(target = "user", expression = "java(mapUserResponse(recipe.getUserCreated()))" )
     @Mapping(target = "ingredients", expression = "java(mapIngredients(recipe.getIngredients()))")// Sử dụng phương thức ánh xạ tùy chỉnh cho ingredients
     @Mapping(target = "instructions", expression = "java(mapInstructions(recipe.getInstructions()))")
@@ -48,6 +47,6 @@ public interface RecipeMapper {
                 .collect(Collectors.toList());
     }
     default UserResponse mapUserResponse(User user){
-        return  new UserResponse(user.getFirstName(), user.getLastName());
+        return  new UserResponse(user.getId(), user.getEmail(),user.getFirstName(), user.getLastName());
     }
 }

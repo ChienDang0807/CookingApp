@@ -1,8 +1,6 @@
-package com.chiendang.cooking.api.review.dto;
+package com.chiendang.cooking.dto.response;
 
 import com.chiendang.cooking.api.auth.dto.response.UserResponse;
-import com.chiendang.cooking.api.auth.entity.User;
-import com.chiendang.cooking.entity.Recipe;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +14,11 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReviewResponse implements Serializable {
 
-    private UserResponse user;
+    UserResponse user;
+
+    Integer recipeId;
+
+    String commentIndex;
 
     String comment;
 

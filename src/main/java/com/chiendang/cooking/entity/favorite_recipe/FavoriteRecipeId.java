@@ -2,6 +2,7 @@ package com.chiendang.cooking.entity.favorite_recipe;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.entity.Recipe;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,12 +19,11 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class FavoriteRecipeId implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @ManyToOne
+
     @JoinColumn(name = "recipe_id")
-    private Recipe recipe;
+    private Integer recipeId;
 
 }

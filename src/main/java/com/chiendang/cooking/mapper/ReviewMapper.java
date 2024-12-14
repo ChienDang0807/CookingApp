@@ -1,8 +1,8 @@
 package com.chiendang.cooking.mapper;
 
 import com.chiendang.cooking.api.auth.dto.response.UserResponse;
-import com.chiendang.cooking.api.review.dto.ReviewResponse;
-import com.chiendang.cooking.api.review.entiy.Review;
+import com.chiendang.cooking.dto.response.ReviewResponse;
+import com.chiendang.cooking.entity.review.Review;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +14,9 @@ public class ReviewMapper {
         return ReviewResponse.builder()
                 .comment(review.getComment())
                 .rating(review.getRating())
-                .user((new UserResponse(review.getUser().getEmail(),review.getUser().getFirstName(),review.getUser().getLastName())))
+                .user((new UserResponse(review.getUser().getId(),review.getUser().getEmail(),review.getUser().getFirstName(),review.getUser().getLastName())))
+                .commentIndex(review.getId().getCommentIndex())
+                .recipeId(review.getId().getRecipeId())
                 .build();
     }
 

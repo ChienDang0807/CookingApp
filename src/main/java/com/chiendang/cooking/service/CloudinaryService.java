@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.image.service;
+package com.chiendang.cooking.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;

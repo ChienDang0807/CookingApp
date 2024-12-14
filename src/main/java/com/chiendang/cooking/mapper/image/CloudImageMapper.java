@@ -1,8 +1,8 @@
-package com.chiendang.cooking.api.image.mapper;
+package com.chiendang.cooking.mapper.image;
 
 
 
-import com.chiendang.cooking.api.image.dto.CloudResponse;
+import com.chiendang.cooking.dto.response.CloudResponse;
 import org.mapstruct.Mapper;
 
 import java.util.Map;

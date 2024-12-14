@@ -2,7 +2,7 @@ package com.chiendang.cooking.entity;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.entity.favorite_recipe.FavoriteRecipe;
-import com.chiendang.cooking.api.review.entiy.Review;
+import com.chiendang.cooking.entity.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,10 +37,10 @@ public class Recipe extends AbstractEntity {
     @Column(name = "cook_time")
      String cookTime;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe",  orphanRemoval = true)
     Set<Ingredient> ingredients = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipeId")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipeId",  orphanRemoval = true)
      List<Instruction> instructions = new ArrayList<>();
 
 
@@ -65,8 +65,7 @@ public class Recipe extends AbstractEntity {
     String image;
 
     @Column(name = "rating")
-    Integer rating;
-
+    Double rating;
 
 
     @JsonIgnore // Stop infinite loop

@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.image.dto;
+package com.chiendang.cooking.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 public enum ErrorCode {
     FILE_EMPTY (1001,"File is empty", HttpStatus.BAD_REQUEST),
-    RESOURCES_NOT_FOUND(1002, "Movie is not found", HttpStatus.NOT_FOUND),
+    RESOURCES_NOT_FOUND(1002, "Resource not found", HttpStatus.NOT_FOUND),
     FILE_IS_EXISTED(1003, "File is existed", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1011,"Password at least 8 character", HttpStatus.BAD_REQUEST),
     USERNAME_INVALID(1016,"Username invalid", HttpStatus.BAD_REQUEST),
@@ -22,7 +22,7 @@ public enum ErrorCode {
     CATEGORY_IS_EXISTED(1017, "Category is existed", HttpStatus.BAD_REQUEST),
     LIST_EMPTY(1018, "List is empty", HttpStatus.BAD_REQUEST),
     EMAIL_INVALID(1010,"Please provide valid email",HttpStatus.BAD_REQUEST),
-
+    REVIEW_NOT_FOUND(1019,"Bình luận không tồn tại",HttpStatus.BAD_REQUEST)
     ;
     int  code;
     String message;

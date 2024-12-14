@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,19 +18,11 @@ public class RecipeRequest {
 
     @NotBlank(message = "NOT_BLANK")
     String recipeName;
-
     String prepTime;
-
     String cookTime;
-
-    List<IngredientRequest> ingredients;
-
+    Set<IngredientRequest> ingredients;
     List<InstructionRequest> instructions;
-
     Category category;
-
-    String image;
-    Integer rating;
-
+    Double rating;
 
 }

@@ -1,4 +1,4 @@
-package com.chiendang.cooking.api.review.entiy;
+package com.chiendang.cooking.entity.review;
 
 import com.chiendang.cooking.api.auth.entity.User;
 import com.chiendang.cooking.entity.Recipe;

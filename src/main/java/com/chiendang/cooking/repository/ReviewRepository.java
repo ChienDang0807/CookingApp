@@ -1,7 +1,7 @@
-package com.chiendang.cooking.api.review.repository;
+package com.chiendang.cooking.repository;
 
-import com.chiendang.cooking.api.review.entiy.Review;
-import com.chiendang.cooking.api.review.entiy.ReviewId;
+import com.chiendang.cooking.entity.review.Review;
+import com.chiendang.cooking.entity.review.ReviewId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

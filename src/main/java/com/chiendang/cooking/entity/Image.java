@@ -1,18 +1,19 @@
-package com.chiendang.cooking.api.image.entity;
+package com.chiendang.cooking.entity;
 
+import com.chiendang.cooking.utils.ImageType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "user_image")
+@Table(name = "image")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserImage {
+public class Image {
 
     @Id
     @Column(name="id")
@@ -22,5 +23,10 @@ public class UserImage {
     String imageUrl;
     String cloudImageId;
     String imageName;
-    Integer userId;
+
+    @Enumerated(EnumType.STRING)
+    ImageType imageType;
+    Integer referenceId;
+
+
 }
